@@ -1,0 +1,26 @@
+{
+  "name": "testserver",
+  "version": "0.7.0",
+  "main": "app.js",
+  "engines": {
+    "node": ">=4.0.0",
+    "npm": ">=3.0.0"
+  },
+  "scripts": {
+    "start": "nodemon ./server"
+  },
+  "dependencies": {
+    "babel-core": "^6.18.2",
+    "express": "4.14.0",
+    "nodemon": "1.9.2",
+    "uuid": "3.0.1",
+    "socket.io": "1.4.8",
+    "socket.io-client": "1.4.8",
+    "socket.io-emitter": "1.0.0",
+    "redis": "2.6.0",
+    "socket.io-redis": "1.1.1"
+  },
+  "author": "Patrick Howard",
+  "license": "MIT",
+  "homepage": "http://www.xio.com"
+}
