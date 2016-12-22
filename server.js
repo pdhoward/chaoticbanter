@@ -26,7 +26,7 @@ var data = {
   id: "",
   content: "this is a test text",
   user: "BanterBot",
-  postType: "AI",
+  postType: "Live",
   likes:[],
   dislikes:[],
   sessionId: "testid"
@@ -55,9 +55,16 @@ function sendPost(session, data, socket) {
       data.sessionId = session.id;
       var postId = uuid();
       data.id = postId;
+      data.postType = 'Live';
       socket.broadcast
       .to(room)
       .emit('chaotic/posts/receive/add', data)
+
+      data.postType = 'AI';
+      socket.broadcast
+      .to(room)
+      .emit('chaotic/posts/receive/add', data)
+
   }
 
 function joinSession(session, socket) {
@@ -68,8 +75,6 @@ function joinSession(session, socket) {
       };
 
 io.on('connection', function(socket) {
-      var ip = socket.handshake.headers['x-forwarded-for'] || socket.handshake.address.address;
-      console.log('ip address = ' + ip);
 
       joinSession(session, socket);
 
@@ -80,12 +85,12 @@ io.on('connection', function(socket) {
       io.emit('time', new Date);
       //var io = require('socket.io-emitter')({ host: '127.0.0.1', port: 6379 })
       /////////////////////////////////////////////////////////////////////////////
-      
+
       setInterval(function(){
         prepareText();
         sendPost(session, data, socket);
-        console.log("emitting data " + JSON.stringify(data) + " for session " + JSON.stringify(session))
-      }, 10000);
+      }, 15000);
+
 
     });
 
