@@ -19,12 +19,8 @@ var port = process.env.PORT || 3002;
 var htmlFile =      path.resolve(__dirname, './client/index.html');
 var buildFolder =   path.resolve(__dirname, './build');
 
-// messages
-var testArray   = require('./texts');
-
-app.use(session);
+app.use('/', function(req, res, next) {
+  res.sendFile(htmlFile)
+})
 
 ioServer.listen(port);
-
-
-var io = socketIo(httpServer);

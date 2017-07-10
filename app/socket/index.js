@@ -1,19 +1,24 @@
 'use strict';
 
-var config 	= require('../config');
+var config 	= require('../../config');
 var redis 	= require('redis').createClient;
 var adapter = require('socket.io-redis');
 
-var Room = require('../models/room');
+
+// messages
+var testArray   = require('../../texts');
 
 /**
  * Encapsulates all code for emitting and listening to socket events
  *
  */
 
- /*
+
 var ioEvents = function(io) {
 
+		}
+
+/*
 	// Rooms namespace
 	io.of('/rooms').on('connection', function(socket) {
 
