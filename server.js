@@ -32,20 +32,20 @@ var pub = new Redis({
 });
 
 // subscribe to a channel
-redis.subscribe('newMessage', function (err, count) {
+redis.subscribe('dash1', function (err, count) {
 			console.log("Subscribed to " + count + " channel")
   });
 
 // log message when detected on redis channel
 redis.on('message', function (channel, message) {
-    console.log('Received the following from channel ' + channel + ' message: ' + message);
+    console.log('Banter detected on ' + channel + ' this message: ' + message);
   });
 
 // publish messages randomly -- test runner for chaltic platform
 function stream() {
   var msgObj = banter[Math.floor(Math.random() * banter.length)];
   var sendMsg = JSON.stringify(msgObj)
-  pub.publish('newMessage', sendMsg);
+  pub.publish('dash1', sendMsg);
 
 }
 
@@ -54,7 +54,7 @@ function intervalObj() {
   setInterval(function() {
   console.log('publish');
   stream()
- }, 2000)};
+}, 8000)};
 
 
 // server spins up and initiates the publishing function
