@@ -1,5 +1,7 @@
 'use strict';
 
+// note that config.target holds the ip address of the platform consuming the banter messages
+
 var init = function () {
 
 	if(process.env.NODE_ENV === 'production') {

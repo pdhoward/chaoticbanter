@@ -5,31 +5,37 @@
 //////////////////////////////////////////////////
 
 'use strict';
-var config 	=       require('./config');
-var express =       require('express');
-var path  =         require('path');
-var banter =        require('./texts');
-var Redis =         require('ioredis');
+const config 	=       require('./config');
+const express =       require('express');
+const path  =         require('path');
+const banter =        require('./texts');
+const countries =     require('./countries/country')
+const Redis =         require('ioredis');
 
-var app =  express();
-var server =        require('http').Server(app);
-var port = process.env.PORT || 3002;
+const app =  express();
+const server =        require('http').Server(app);
+const port = process.env.PORT || 3002;
 
 ////////////////////////////////////////////////
 let redisPort =     config.redis.port;
 let redisHost =     config.redis.host;
 let redisPassword = config.redis.password;
 
-var redis = new Redis({
+let redis = new Redis({
  port: redisPort,
  host: redisHost
 });
 
-var pub = new Redis({
+let pub = new Redis({
  port: redisPort,
  host: redisHost
 
 });
+
+/////////////////////// arrays with additional data to decorate the text messages ////////////////
+
+let img = ['1', '2', '3', '4', '5', '6', '7', '8', 'chatbot', 'helpbot', 'smartbot']
+
 
 // subscribe to a channel
 redis.subscribe('banter', function (err, count) {
@@ -41,9 +47,12 @@ redis.on('message', function (channel, message) {
     console.log('Banter detected on ' + channel + ' this message: ' + message);
   });
 
-// publish messages randomly -- test runner for chaltic platform
+// publish messages randomly -- test runner for chaotic platform
+// add a country name and avatar chosen randomly from arrays
 function stream() {
-  var msgObj = banter[Math.floor(Math.random() * banter.length)];
+  let msgObj = banter[Math.floor(Math.random() * banter.length)];
+  msgObj.flagURL = config.target + "/img/flags/" + countries[Math.floor(Math.random() * countries.length)].name + ".png"
+  msgObj.avatarURL = config.target + "/img/avatars/" + img[Math.floor(Math.random() * img.length)] + ".jpg"
   var sendMsg = JSON.stringify(msgObj)
   pub.publish('banter', sendMsg);
 
