@@ -32,7 +32,7 @@ var pub = new Redis({
 });
 
 // subscribe to a channel
-redis.subscribe('dash1', function (err, count) {
+redis.subscribe('banter', function (err, count) {
 			console.log("Subscribed to " + count + " channel")
   });
 
@@ -45,7 +45,7 @@ redis.on('message', function (channel, message) {
 function stream() {
   var msgObj = banter[Math.floor(Math.random() * banter.length)];
   var sendMsg = JSON.stringify(msgObj)
-  pub.publish('dash1', sendMsg);
+  pub.publish('banter', sendMsg);
 
 }
 
@@ -54,7 +54,7 @@ function intervalObj() {
   setInterval(function() {
   console.log('publish');
   stream()
-}, 8000)};
+}, 5000)};
 
 
 // server spins up and initiates the publishing function
