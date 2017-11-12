@@ -68,7 +68,7 @@ redis.subscribe(action, function (err, count) {
 
 // log message when detected on redis channel
 redis.on('message', function (channel, message) {
-    console.log('Banter detected on ' + channel + ' this message: ' + message);
+    console.log("Channel> " + channel + "Message> " + message);
   });
 
 // publish messages randomly -- test runner for chaotic platform
