@@ -48,8 +48,8 @@ switch (action) {
     banter()
     break;
 
-  case "deposit":
-    deposit();
+  case "productfile":
+    productfile();
     break;
 
   case "withdraw":
@@ -82,13 +82,69 @@ function streambanter() {
 
 }
 
-// control the rate of publishing messages
 function banter() {
   setInterval(function() {
   console.log('bantering');
   streambanter()
 }, 5000)};
 
+
+// create a test file from the banter file, randomly updated with product, pricing info
+// This serves as the basis for deeper testing on the chaotic platform
+
+const prepproducts = (cb) => {
+  let id = 0
+  let msgObj = {}
+  let productObj = {}
+  let productarray = []
+  for (var i = 0; i < banterfile.length; i++) {
+    msgObj.id = id
+    id++
+    msgObj.name = banterfile[i].name
+    productObj = productfile[Math.floor(Math.random() * productfile.length)];
+    msgObj.text = productObj.text
+    productarray.push(msgObj)
+    }
+  cb(productarray)
+  }
+
+const streamproducts = (arr) = {
+  let sendObj = arr[Math.floor(Math.random() * arr.length)];
+  sendObj.flagURL = config.target + "/img/flags/" + countries[Math.floor(Math.random() * countries.length)].name + ".png"
+  sendObj.avatarURL = config.target + "/img/avatars/" + img[Math.floor(Math.random() * img.length)] + ".jpg"
+  var sendMsg = JSON.stringify(sendObj)
+  pub.publish(action, sendMsg);
+
+}
+
+function productfile() {
+
+  prepproducts((arr) => {
+    streamproducts(arr)
+  }
+)
+  let msgObj = banterfile[Math.floor(Math.random() * banterfile.length)];
+  // We will this object as the basis for creating a new text message
+  fs.readFile("texts/banter.txt", "utf8", function(err, data) {
+    if (err) {
+      return console.log(err);
+    }
+
+    // Break down all the numbers inside
+    data = data.split(", ");
+    var result = 0;
+
+    // Loop through those numbers and add them together to get a sum.
+    for (var i = 0; i < data.length; i++) {
+      if (parseFloat(data[i])) {
+        result += parseFloat(data[i]);
+      }
+    }
+
+    // We will then print the final balance rounded to two decimal places.
+    console.log("You have a total of " + result.toFixed(2));
+  });
+}
 
 // server spins up and initiates the publishing function
 server.listen(port, function() {
