@@ -48,17 +48,10 @@ switch (action) {
     banter()
     break;
 
-  case "productfile":
-    productfile();
+  case "product":
+    product();
     break;
 
-  case "withdraw":
-    withdraw();
-    break;
-
-  case "lotto":
-    lotto();
-    break;
 }
 
 // subscribe to a channel
@@ -117,7 +110,7 @@ const streamproducts = (arr) = {
 
 }
 
-function productfile() {
+function product() {
 
   prepproducts((arr) => {
     streamproducts(arr)
