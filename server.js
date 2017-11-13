@@ -114,29 +114,8 @@ function product() {
 
   prepproducts((arr) => {
     streamproducts(arr)
-  }
-)
-  let msgObj = banterfile[Math.floor(Math.random() * banterfile.length)];
-  // We will this object as the basis for creating a new text message
-  fs.readFile("texts/banter.txt", "utf8", function(err, data) {
-    if (err) {
-      return console.log(err);
     }
-
-    // Break down all the numbers inside
-    data = data.split(", ");
-    var result = 0;
-
-    // Loop through those numbers and add them together to get a sum.
-    for (var i = 0; i < data.length; i++) {
-      if (parseFloat(data[i])) {
-        result += parseFloat(data[i]);
-      }
-    }
-
-    // We will then print the final balance rounded to two decimal places.
-    console.log("You have a total of " + result.toFixed(2));
-  });
+  )  
 }
 
 // server spins up and initiates the publishing function
