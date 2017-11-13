@@ -27,6 +27,6 @@ module.exports = {
 	create,
 	find,
 	findOne,
-	findById
+	findById,
 	findByIdAndUPdate
 };
