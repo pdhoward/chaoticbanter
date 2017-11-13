@@ -61,7 +61,7 @@ redis.subscribe(action, function (err, count) {
 
 // log message when detected on redis channel
 redis.on('message', function (channel, message) {
-    console.log("Channel> " + channel + "Message> " + message);
+    console.log("Channel> " + channel + " Message> " + message);
   });
 
 // publish messages randomly -- test runner for chaotic platform
@@ -101,7 +101,7 @@ const prepproducts = (cb) => {
   cb(productarray)
   }
 
-const streamproducts = (arr) = {
+const streamproducts = (arr) => {
   let sendObj = arr[Math.floor(Math.random() * arr.length)];
   sendObj.flagURL = config.target + "/img/flags/" + countries[Math.floor(Math.random() * countries.length)].name + ".png"
   sendObj.avatarURL = config.target + "/img/avatars/" + img[Math.floor(Math.random() * img.length)] + ".jpg"
@@ -115,7 +115,7 @@ function product() {
   prepproducts((arr) => {
     streamproducts(arr)
     }
-  )  
+  )
 }
 
 // server spins up and initiates the publishing function
