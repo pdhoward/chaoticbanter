@@ -35,7 +35,6 @@ let pub = new Redis({
 
 });
 
-
 // cli command line
 let action = process.argv[2];
 
@@ -44,6 +43,18 @@ let action = process.argv[2];
 let img = ['1', '2', '3', '4', '5', '6', '7', '8', 'chatbot', 'helpbot', 'smartbot']
 
 let orders = []
+let requests = [
+  "i am looking for ",
+  "please ship me 12 ",
+  "how much for ",
+  "what is the price of ",
+  " are you carrying ",
+  "what is the cost to ship ",
+  "i would like to order ",
+  "please replenish my prior order ",
+  "how do i place an order for ",
+  "ship 6 of "
+]
 
 // if the order.json file does not exist import the test spreadsheet with 8000+ order items
 // to save json file set output to products/products.json -- else set to null
@@ -88,6 +99,10 @@ switch (action) {
 redis.subscribe(action, function (err, count) {
 			console.log("Subscribed to " + count + " channel")
   });
+// listen for orders
+redis.subscribe('orders', function (err, count) {
+  	 console.log("Subscribed to " + count + " channel")
+  });
 
 // log message when detected on redis channel
 redis.on('message', function (channel, message) {
@@ -112,7 +127,7 @@ function banter() {
 }, 5000)};
 
 
-// create a test file from the banter file, randomly updated with product, pricing info
+// create a test file using banter file as base, randomly updated with requests
 // This serves as the basis for deeper testing on the chaotic platform
 
 function prepproducts(cb) {
@@ -125,13 +140,13 @@ function prepproducts(cb) {
     //    msgObj.text = productObj.text
     msg.id = id
     msg.name = orders[Math.floor(Math.random() * orders.length)].customername
+    msg.text = requests[Math.floor(Math.random() * requests.length)] + orders[Math.floor(Math.random() * orders.length)].productname
     return msg
   })
   cb(productarray)
 }
 
-
-const streamproducts = (arr) => {
+const streamrequests = (arr) => {
   let sendObj = arr[Math.floor(Math.random() * arr.length)];
   sendObj.flagURL = config.target + "/img/flags/" + countries[Math.floor(Math.random() * countries.length)].name + ".png"
   sendObj.avatarURL = config.target + "/img/avatars/" + img[Math.floor(Math.random() * img.length)] + ".jpg"
@@ -139,14 +154,23 @@ const streamproducts = (arr) => {
   pub.publish(action, sendMsg);
 
 }
+const streamorders = (arr) => {
+  let sendObj = arr[Math.floor(Math.random() * arr.length)];
+  var sendMsg = JSON.stringify(sendObj)
+  pub.publish('orders', sendMsg);
+
+}
 
 function product() {
   if (fs.existsSync("products/orders.json")) {
-    orders = JSON.parse(fs.readFileSync("products/orders.json", {encoding: 'utf8'}))    
+    orders = JSON.parse(fs.readFileSync("products/orders.json", {encoding: 'utf8'}))
     prepproducts (function(arr) {
       setInterval(function() {
-        streamproducts(arr)
+        streamrequests(arr)
       }, 5000)
+      setInterval(function() {
+        streamorders(orders)
+      }, 10000)
     })
   }
 };
