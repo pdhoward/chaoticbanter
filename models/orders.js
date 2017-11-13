@@ -2,7 +2,7 @@
 
 var orderModel   = require('../db').models.order;
 
-var create = function (data, callback){
+var save = function (data, callback){
 	var newOrder = new orderModel(data);
 	newOrder.save(callback);
 };
@@ -24,7 +24,7 @@ var findByIdAndUpdate = function(id, data, callback){
 }
 
 module.exports = {
-	create,
+	save,
 	find,
 	findOne,
 	findById,

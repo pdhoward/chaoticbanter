@@ -6,7 +6,7 @@
 
 'use strict';
 const config 	=       require('./config');
-const orders =        require('./models/orders');
+const order =         require('./models/orders');
 const express =       require('express');
 const path  =         require('path');
 const banterfile =    require('./texts');
@@ -55,6 +55,11 @@ XLSX({
     }else {
       console.log(result[0]['customername'])
       console.log(result[0]['salesamt'])
+      result.filter((item) => {
+        order.save((item), () => {
+          // do nothing
+        })
+      })
     }
   });
 
