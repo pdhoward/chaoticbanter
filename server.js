@@ -53,8 +53,6 @@ XLSX({
     if(err) {
       console.error(err);
     }else {
-      //console.log(result);
-      //console.log(JSON.parse(JSON.stringify(result)))
       console.log(result[0]['customername'])
       console.log(result[0]['salesamt'])
     }
