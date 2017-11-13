@@ -124,7 +124,7 @@ function prepproducts(cb) {
     //productObj = productfile[Math.floor(Math.random() * productfile.length)];
     //    msgObj.text = productObj.text
     msg.id = id
-    msg.name = order[Math.floor(Math.random() * order.length)].customername
+    msg.name = orders[Math.floor(Math.random() * orders.length)].customername
     return msg
   })
   cb(productarray)
@@ -142,13 +142,9 @@ const streamproducts = (arr) => {
 
 function product() {
   if (fs.existsSync("products/orders.json")) {
-    orders = JSON.parse(fs.readFileSync("products/orders.json", {encoding: 'utf8'}))
-
+    orders = JSON.parse(fs.readFileSync("products/orders.json", {encoding: 'utf8'}))    
     prepproducts (function(arr) {
-      console.log("prep done")
-      console.log(arr)
       setInterval(function() {
-        console.log('product');
         streamproducts(arr)
       }, 5000)
     })
