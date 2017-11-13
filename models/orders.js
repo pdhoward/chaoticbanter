@@ -28,5 +28,5 @@ module.exports = {
 	find,
 	findOne,
 	findById,
-	findByIdAndUPdate
+	findByIdAndUpdate
 };

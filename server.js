@@ -10,7 +10,6 @@ const orders =        require('./models/orders');
 const express =       require('express');
 const path  =         require('path');
 const banterfile =    require('./texts');
-const productfile =   require('./products/products');
 const countries =     require('./countries/country')
 const Redis =         require('ioredis');
 const fs =            require("fs");
@@ -107,7 +106,7 @@ function prepproducts(cb) {
   let productObj = {}
   let productarray = banterfile.map((msg) => {
     id++
-    productObj = productfile[Math.floor(Math.random() * productfile.length)];
+    //productObj = productfile[Math.floor(Math.random() * productfile.length)];
     //    msgObj.text = productObj.text
     msg.id = id
     return msg
