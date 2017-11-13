@@ -9,6 +9,7 @@ const config 	=       require('./config');
 const express =       require('express');
 const path  =         require('path');
 const banterfile =    require('./texts');
+const productfile =   require('./products/products');
 const countries =     require('./countries/country')
 const Redis =         require('ioredis');
 const fs =            require("fs");
@@ -85,7 +86,7 @@ function banter() {
 // create a test file from the banter file, randomly updated with product, pricing info
 // This serves as the basis for deeper testing on the chaotic platform
 
-const prepproducts = (cb) => {
+function prepproducts(cb) {
   let id = 0
   let msgObj = {}
   let productObj = {}
@@ -111,14 +112,16 @@ const streamproducts = (arr) => {
 }
 
 function product() {
-
-  prepproducts((arr) => {
+  prepproducts (function(arr) {
+    setInterval(function() {
+    console.log('product');
     streamproducts(arr)
-    }
-  )
-}
+    }, 5000)
+  })
+};
 
-// server spins up and initiates the publishing function
+
+// server spins up and listed for the cli command
 server.listen(port, function() {
   console.log("Listening on port " + port)
 })
