@@ -1,12 +1,12 @@
-#ChaoticBanter
+## ChaoticBanter
 
 This is part of ChaoticBots series -- spoof to publish messages at set interval to test platforms
 
-
-It features the following technologies:
+It features integration with the following technology platforms
 
 * [Socket IO](http://socket.io)
-* [REDIS]
+* [REDIS](https://redislabs.com/)
+* [MLab](https://mlab.com/welcome/)
 
 ## Development
 
