@@ -13,6 +13,7 @@ const productfile =   require('./products/products');
 const countries =     require('./countries/country')
 const Redis =         require('ioredis');
 const fs =            require("fs");
+const XLSX =          require("xls-to-json");
 
 const app =  express();
 const server =        require('http').Server(app);
@@ -42,7 +43,22 @@ let action = process.argv[2];
 
 let img = ['1', '2', '3', '4', '5', '6', '7', '8', 'chatbot', 'helpbot', 'smartbot']
 
-//////
+//import the test spreadsheet with 8000+ order items
+// to save json file set output to products/products.json
+XLSX({
+    input: "products/samplesales.xls",
+    output: null,
+    sheet: "Orders"
+  }, function(err, result) {
+    if(err) {
+      console.error(err);
+    }else {
+      //console.log(result);
+      //console.log(JSON.parse(JSON.stringify(result)))
+      console.log(result[0]['customername'])
+      console.log(result[0]['salesamt'])
+    }
+  });
 
 switch (action) {
   case "banter":
@@ -90,17 +106,16 @@ function prepproducts(cb) {
   let id = 0
   let msgObj = {}
   let productObj = {}
-  let productarray = []
-  for (var i = 0; i < banterfile.length; i++) {
-    msgObj.id = id
+  let productarray = banterfile.map((msg) => {
     id++
-    msgObj.name = banterfile[i].name
     productObj = productfile[Math.floor(Math.random() * productfile.length)];
-    msgObj.text = productObj.text
-    productarray.push(msgObj)
-    }
+    //    msgObj.text = productObj.text
+    msg.id = id
+    return msg
+  })
   cb(productarray)
-  }
+}
+
 
 const streamproducts = (arr) => {
   let sendObj = arr[Math.floor(Math.random() * arr.length)];
@@ -113,6 +128,8 @@ const streamproducts = (arr) => {
 
 function product() {
   prepproducts (function(arr) {
+    console.log("prep done")
+    console.log(arr)
     setInterval(function() {
     console.log('product');
     streamproducts(arr)
