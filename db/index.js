@@ -19,14 +19,13 @@ Mongoose.connection.on('error', function(err) {
 	if(err) throw err;
 });
 
-// mpromise (mongoose's default promise library) is deprecated,
-// Plug-in your own promise library instead.
+// mpromise (mongoose's default promise library) is deprecated
 // Use native promises
 Mongoose.Promise = global.Promise;
 
 module.exports = {
 	Mongoose,
 	models: {
-		order: require('./schemas/orders.js')	
+		order: require('./schemas/orders.js')
 	}
 };
