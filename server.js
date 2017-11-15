@@ -111,6 +111,8 @@ redis.on('message', function (channel, message) {
 
 // publish messages randomly -- test runner for chaotic platform
 // add a country name and avatar chosen randomly from arrays
+// Note that the target in the config file refers to the host and port where the
+// static assets reside which is chaotic dash
 function streambanter() {
   let msgObj = banterfile[Math.floor(Math.random() * banterfile.length)];
   msgObj.flagURL = config.target + "/img/flags/" + countries[Math.floor(Math.random() * countries.length)].name + ".png"
