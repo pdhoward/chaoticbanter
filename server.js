@@ -93,6 +93,9 @@ switch (action) {
     product();
     break;
 
+  default:
+    console.log('Error ' + '' + action + ' not recognized')
+    break;
 }
 
 // subscribe to a channel
