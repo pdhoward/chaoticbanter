@@ -120,7 +120,7 @@ function streambanter() {
   let msgObj = banterfile[Math.floor(Math.random() * banterfile.length)];
   msgObj.flagURL = config.target + "/img/flags/" + countries[Math.floor(Math.random() * countries.length)].name + ".png"
   msgObj.avatarURL = config.target + "/img/avatars/" + img[Math.floor(Math.random() * img.length)] + ".jpg"
-  var sendMsg = JSON.stringify(msgObj)
+  let sendMsg = JSON.stringify(msgObj)
   pub.publish(action, sendMsg);
 
 }
