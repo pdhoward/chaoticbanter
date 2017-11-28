@@ -48,12 +48,16 @@ let requests = [
   "please ship me 12 ",
   "how much for ",
   "what is the price of ",
-  " are you carrying ",
+  "are you carrying ",
   "what is the cost to ship ",
   "i would like to order ",
   "please replenish my prior order ",
   "how do i place an order for ",
-  "ship 6 of "
+  "ship 6 of ",
+  "email catalogue at joe@gmail.com for ",
+  " send to pat@xiollc.com the pricing for ",
+  " you can reach me at bot@hotmail.com for  status on ",
+  "urgently need status at me@geo.org for "
 ]
 
 // if the order.json file does not exist import the test spreadsheet with 8000+ order items
@@ -173,9 +177,9 @@ function product() {
       setInterval(function() {
         streamrequests(arr)
       }, 5000)
-      setInterval(function() {
-        streamorders(orders)
-      }, 10000)
+  //    setInterval(function() {
+  //      streamorders(orders)
+  //    }, 10000)
     })
   }
 };
